@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:ecom_test;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+
+app:
+  jwt:
+    secret: "THIS_IS_A_TEST_SECRET_THAT_IS_LONG_ENOUGH_1234567890"
+    accessTokenExpirationMs: 900000
+    refreshTokenExpirationMs: 604800000
+
+appseed:
+  admin:
+    name: "Admin"
+    email: "admin@ecom.com"
+    password: "Admin@123"
