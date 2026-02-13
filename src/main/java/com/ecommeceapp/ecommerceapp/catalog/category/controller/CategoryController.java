@@ -4,12 +4,14 @@ import com.ecommeceapp.ecommerceapp.catalog.category.dto.CategoryDtos;
 import com.ecommeceapp.ecommerceapp.catalog.category.service.CategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/categories")
@@ -37,7 +39,7 @@ public class CategoryController {
             @PathVariable Long id,
             @Valid @RequestBody CategoryDtos.UpdateCategoryRequest req
     ) {
-        return ResponseEntity.ok(service.update(id, req));
+            return ResponseEntity.ok(service.update(id, req));
     }
 
     @DeleteMapping("/{id}")
@@ -46,4 +48,4 @@ public class CategoryController {
         return ResponseEntity.noContent().build(); // 204
     }
 }
-}
+

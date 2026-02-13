@@ -3,10 +3,12 @@ package com.ecommeceapp.ecommerceapp.catalog.category.service;
 import com.ecommeceapp.ecommerceapp.catalog.category.dto.CategoryDtos;
 import com.ecommeceapp.ecommerceapp.catalog.category.entity.Category;
 import com.ecommeceapp.ecommerceapp.catalog.category.repo.CategoryRepository;
+import com.ecommeceapp.ecommerceapp.common.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.module.ResolutionException;
 import java.util.List;
 
 
@@ -46,12 +48,12 @@ public class CategoryService {
     @Transactional
     public CategoryDtos.CategoryResponse update(Long id, CategoryDtos.UpdateCategoryRequest req) {
         Category c = categoryRepo.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Category not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
 
         categoryRepo.findByNameIgnoreCase(req.name())
                 .ifPresent(existing -> {
                     if (!existing.getId().equals(id)) {
-                        throw new IllegalArgumentException("Category name already exists");
+                        throw new ResourceNotFoundException("Category name already exists");
                     }
                 });
 

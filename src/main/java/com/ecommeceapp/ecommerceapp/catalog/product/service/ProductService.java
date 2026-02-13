@@ -1,11 +1,12 @@
 package com.ecommeceapp.ecommerceapp.catalog.product.service;
 
-import com.ecommeceapp.ecommerceapp.catalog.category.*;
+
 import com.ecommeceapp.ecommerceapp.catalog.category.entity.Category;
 import com.ecommeceapp.ecommerceapp.catalog.category.repo.CategoryRepository;
 import com.ecommeceapp.ecommerceapp.catalog.product.dto.ProductDtos;
 import com.ecommeceapp.ecommerceapp.catalog.product.entity.Product;
 import com.ecommeceapp.ecommerceapp.catalog.product.repo.ProductRepository;
+import com.ecommeceapp.ecommerceapp.common.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
@@ -49,17 +50,17 @@ public class ProductService {
 
     public ProductDtos.ProductResponse get(Long id) {
         Product p = productRepo.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
         return toResponse(p);
     }
 
     @Transactional
     public ProductDtos.ProductResponse update(Long id, ProductDtos.UpdateProductRequest req) {
         Product p = productRepo.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
 
         Category cat = categoryRepo.findById(req.categoryId())
-                .orElseThrow(() -> new IllegalArgumentException("Category not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
 
         p.setName(req.name());
         p.setDescription(req.description());
